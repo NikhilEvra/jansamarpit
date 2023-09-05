@@ -13,6 +13,10 @@ router
     .route('/login')
     .post(authController.login);
 
+router
+    .route('/otp-verification')
+    .post(authController.otpVerification);
+
 // router
 //     .route('/')
 //     .post(uploadFileController.uploadSingleVideo, uploadFileController.resizeVideo);

@@ -111,7 +111,7 @@ exports.login = catchAsync(async(req, res, next) => {
     const sql = `SELECT * FROM user_master WHERE phone='${phone}' AND status='Active'`;
     con.query(sql, (err, result) => {
 
-        if(result.length == 0) return next(new AppError('Invalid Credentials!', 400));
+        if(result.length == 0) return next(new AppError('Invalid Phone Number!', 400));
 
         const rand = Math.floor(Math.random() * 9000 + 1000);
 
@@ -136,6 +136,23 @@ exports.login = catchAsync(async(req, res, next) => {
             })
         })
         
+    })
+
+});
+
+exports.otpVerification = catchAsync(async(req, res, next) => {
+
+    const phone = req.body.phone;
+    const otp = req.body.otp;
+    $sql = `SELECT * FROM user_master WHERE phone='${phone}' AND otp=${otp} AND status='Active'`;
+    con.query($sql, (err, result) => {
+        
+        if(result.length == 0) return next(new AppError('Invalid Otp! Please Try Again!'));
+
+        res.status(200).json({
+            status : 'success',
+            data : result
+        })
     })
 
 })

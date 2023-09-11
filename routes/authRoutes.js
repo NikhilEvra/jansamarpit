@@ -25,4 +25,10 @@ router
 //     .route('/testapi')
 //     .get(uploadFileController.testApi);
 
+
+router
+    .route('/add_complaints')
+    .post(authController.add_complaints);
+
+
 module.exports = router;

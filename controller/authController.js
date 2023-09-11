@@ -15,7 +15,11 @@ exports.signup = catchAsync(async(req, res, next) => {
 
             const rand = Math.floor(Math.random() * 9000 + 1000);
             const phone = Number(req.body.phone);
-            console.log(req.body);
+            // console.log(req.body);
+            const name = req.body.name;
+            const admin = req.body.admin;
+            const email = req.body.email;
+
 
             const sql2 = `SELECT COUNT(*) AS count FROM user_master WHERE phone='${phone}'`;  
         
@@ -27,9 +31,9 @@ exports.signup = catchAsync(async(req, res, next) => {
                         return next(new AppError('Mobile Number Already Regestered!', 400));
                     }
 
-                    const sql3 = "INSERT INTO user_master(u_id, phone, otp) VALUES(?)";
-                    const val = [uu_id, phone, rand];
-                    
+                    const sql3 = "INSERT INTO user_master(u_id, name,phone,otp,admin,email) VALUES(?)";
+                    const val = [uu_id,name, phone, rand, admin, email];
+
                     con.query(sql3, [val], (err, result3) => {
                   
                         // const req = unirest.post("https://www.fast2sms.com/dev/bulkV2");
@@ -58,8 +62,14 @@ exports.signup = catchAsync(async(req, res, next) => {
     
                 const rand = Math.floor(Math.random() * 9000 + 1000);
                 const phone = Number(req.body.phone);
+                const name = req.body.name;
+                const admin = req.body.admin;
+                const email = req.body.email;
+
+
+
     // console.log(phone);
-    console.log(req.body);
+    // console.log(req.body);
 
                 const sql2 = `SELECT COUNT(*) AS count FROM user_master WHERE phone='${phone}'`;  
             
@@ -71,10 +81,10 @@ exports.signup = catchAsync(async(req, res, next) => {
                             return next(new AppError('Mobile Number Already Regestered!', 400));
                         }
     
-                        const sql3 = "INSERT INTO user_master(u_id, phone, otp) VALUES(?)";
-                        const val = [uu_id, phone, rand];
+                        const sql3 = "INSERT INTO user_master(u_id, name,phone,otp,admin,email) VALUES(?)";
+                        const val = [uu_id,name, phone, rand, admin, email];
                         
-                        con.query(sql3, [val], (err, result3) => {                                              
+                        con.query(sql3, [val], (err, result3) => {                                               
                             
                             // const req = unirest.post("https://www.fast2sms.com/dev/bulkV2");
                             // req.headers({
@@ -157,5 +167,34 @@ exports.otpVerification = catchAsync(async(req, res,next) => {
             data : result 
         })
     })
+
+});
+
+exports.add_complaints = catchAsync(async(req, res,next) => {
+
+    const city = req.body.city;
+    const remarks = req.body.remarks;
+    const priority = req.body.priority;
+    const state = req.body.state;
+    const name = req.body.name;
+
+
+    console.log(req.body);
+  
+    const sql3 = "INSERT INTO complaint_master(name,state,district,priority,admin) VALUES(?)";
+                        const val = [name, remarks, city,priority, state];
+                        
+                        con.query(sql3, [val], (err, result3) => {                                               
+                           
+                            console.log(result3);
+                            console.log(err);
+
+                              res.status(200).json({
+                                status: 'success',
+                                message: 'Complaint raised sucessfully',                
+                                                
+                            })
+
+                        })
 
 })

@@ -176,11 +176,27 @@ exports.add_complaints = catchAsync(async(req, res,next) => {
     const remarks = req.body.remarks;
     const priority = req.body.priority;
     const state = req.body.state;
-    const name = req.body.name;
+    const name = req.body.name;     
+    const file = req.body.file;
 
 
     console.log(req.body);
-  
+  var date_time = new Date();
+console.log(date_time); 
+
+// file upload code
+const fs = require("fs");
+var imageString = file;
+var base64Data = imageString.replace("data:image/jpeg;base64,", "");
+
+// Store Image into Server
+fs.writeFile("uploads/image.png", base64Data, 'base64', function(err) {
+  console.log(err);
+});
+
+
+// file upload code finish
+
     const sql3 = "INSERT INTO complaint_master(name,state,district,priority,admin) VALUES(?)";
                         const val = [name, remarks, city,priority, state];
                         

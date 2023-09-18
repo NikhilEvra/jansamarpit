@@ -25,7 +25,7 @@ if(process.env.NODE_ENV === 'development'){
 
 
 //Body parser, reading data from body into req.body
-app.use(express.json({ limit: '10kb' })); //This is for Add Something in DB
+app.use(express.json({ limit: '100mb' })); //This is for Add Something in DB
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors());

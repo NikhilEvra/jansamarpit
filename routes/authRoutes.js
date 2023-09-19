@@ -1,6 +1,8 @@
 const express = require('express');
 
 const authController = require('../controller/authController');
+const complaintsController = require('../controller/complaintsController');
+
 
 const router = express.Router();
 
@@ -26,9 +28,16 @@ router
 //     .get(uploadFileController.testApi);
 
 
-router
-    .route('/add_complaints')
-    .post(authController.add_complaints);
+// router
+//     .route('/add_complaints')
+//     .post(authController.add_complaints);
 
+    router
+    .route('/add_complaints')
+    .post(complaintsController.add_complaints);
+
+    router
+    .route('/get_complaints')
+    .get(complaintsController.get_complaints);
 
 module.exports = router;

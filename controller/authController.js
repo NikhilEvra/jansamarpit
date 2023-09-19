@@ -3,15 +3,29 @@ const con = require('../utilities/db');
 const AppError = require('../utilities/appError');
 const catchAsync = require('../utilities/catchAsync');
 
-
 exports.signup = catchAsync(async(req, res, next) => {
+
+    var date_ob = new Date();
+    var day = ("0" + date_ob.getDate()).slice(-2);
+    var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+    var year = date_ob.getFullYear();
+       
+    var date = year + "-" + month + "-" + day;
+    // console.log(date);
+        
+    var hours = date_ob.getHours();
+    var minutes = date_ob.getMinutes();
+    var seconds = date_ob.getSeconds();
+  
+    var dateTime =  hours + ":" + minutes + ":" + seconds;
+    // console.log(dateTime);
 
     const sql = "SELECT * FROM user_master ORDER BY id DESC LIMIT 1";
     con.query(sql, (err, result) => {
         
        if(result.length == 0){
             let u_id = 1;            
-            let uu_id = 'jan00' + u_id;
+            let uu_id = 'JAN/2023/' + u_id;
 
             const rand = Math.floor(Math.random() * 9000 + 1000);
             const phone = Number(req.body.phone);
@@ -31,8 +45,8 @@ exports.signup = catchAsync(async(req, res, next) => {
                         return next(new AppError('Mobile Number Already Regestered!', 400));
                     }
 
-                    const sql3 = "INSERT INTO user_master(u_id, name,phone,otp,admin,email) VALUES(?)";
-                    const val = [uu_id,name, phone, rand, admin, email];
+                    const sql3 = "INSERT INTO user_master(u_id, name,phone,otp,admin,email,date,time) VALUES(?)";
+                    const val = [uu_id,name, phone, rand, admin, email, date , dateTime];
 
                     con.query(sql3, [val], (err, result3) => {
                   
@@ -54,17 +68,20 @@ exports.signup = catchAsync(async(req, res, next) => {
                         })
                     })
                 })                
-            })
-       }else{
+            });
+
+       } else{
             result.forEach(el => {           
                 let u_id = el.id + 1;                            
-                let uu_id = 'jan00' + u_id;
+                let uu_id = 'JAN/2023/' + u_id;
     
                 const rand = Math.floor(Math.random() * 9000 + 1000);
                 const phone = Number(req.body.phone);
                 const name = req.body.name;
                 const admin = req.body.admin;
                 const email = req.body.email;
+                
+
 
 
 
@@ -81,8 +98,8 @@ exports.signup = catchAsync(async(req, res, next) => {
                             return next(new AppError('Mobile Number Already Regestered!', 400));
                         }
     
-                        const sql3 = "INSERT INTO user_master(u_id, name,phone,otp,admin,email) VALUES(?)";
-                        const val = [uu_id,name, phone, rand, admin, email];
+                        const sql3 = "INSERT INTO user_master(u_id, name,phone,otp,admin,email,date,time) VALUES(?)";
+                    const val = [uu_id,name, phone, rand, admin, email, date , dateTime];
                         
                         con.query(sql3, [val], (err, result3) => {                                               
                             
@@ -170,47 +187,62 @@ exports.otpVerification = catchAsync(async(req, res,next) => {
 
 });
 
-exports.add_complaints = catchAsync(async(req, res,next) => {
-
-    const city = req.body.city;
-    const remarks = req.body.remarks;
-    const priority = req.body.priority;
-    const state = req.body.state;
-    const name = req.body.name;     
-    const file = req.body.file;
-
-
-    console.log(req.body);
-  var date_time = new Date();
-console.log(date_time); 
-
-// file upload code
-const fs = require("fs");
-var imageString = file;
-var base64Data = imageString.replace("data:image/jpeg;base64,", "");
-
-// Store Image into Server
-fs.writeFile("uploads/image.png", base64Data, 'base64', function(err) {
-  console.log(err);
-});
+// exports.add_complaints = catchAsync(async(req, res,next) => {
+//     var date_ob = new Date();
+//     var day = ("0" + date_ob.getDate()).slice(-2);
+//     var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+//     var year = date_ob.getFullYear();
+       
+//     var date = year + "-" + month + "-" + day;
+//     // console.log(date);
+        
+//     var hours = date_ob.getHours();
+//     var minutes = date_ob.getMinutes();
+//     var seconds = date_ob.getSeconds();
+  
+//     var dateTime =  hours + ":" + minutes + ":" + seconds;
 
 
-// file upload code finish
+//     const city = req.body.city;
+//     const remarks = req.body.remarks;
+//     const priority = req.body.priority;
+//     const state = req.body.state;
+//     const name = req.body.name;     
+//     const file = req.body.file;
+//     const u_id = req.body.user_id;
 
-    const sql3 = "INSERT INTO complaint_master(name,state,district,priority,admin) VALUES(?)";
-                        const val = [name, remarks, city,priority, state];
+
+
+//     console.log(req.body);
+
+
+// // file upload code
+// const fs = require("fs");
+// var imageString = file;
+// var base64Data = imageString.replace("data:image/jpeg;base64,", "");
+
+// // Store Image into Server
+// fs.writeFile("uploads/image.png", base64Data, 'base64', function(err) {
+//   console.log(err);
+// });
+
+
+// // file upload code finish
+
+//     const sql3 = "INSERT INTO complaint_master(name,user_id,state,district,priority,admin,date,time) VALUES(?)";
+//                         const val = [name,u_id, remarks, city, priority, state, date, dateTime];
                         
-                        con.query(sql3, [val], (err, result3) => {                                               
+//                         con.query(sql3, [val], (err, result3) => {                                               
                            
-                            console.log(result3);
-                            console.log(err);
+//                             console.log(result3);
+//                             console.log(err);
 
-                              res.status(200).json({
-                                status: 'success',
-                                message: 'Complaint raised sucessfully',                
+//                               res.status(200).json({
+//                                 status: 'success',
+//                                 message: 'Complaint raised sucessfully',                
                                                 
-                            })
+//                             })
 
-                        })
+//                         })
 
-})
+// })

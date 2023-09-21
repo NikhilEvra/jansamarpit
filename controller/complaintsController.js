@@ -27,6 +27,8 @@ exports.add_complaints = catchAsync(async(req, res,next) => {
     const file = req.body.file;
     const u_id = req.body.user_id;
 
+    const rand = Math.floor(Math.random() * 9000000 + 1000000);
+
 
 
     console.log(req.body);
@@ -38,15 +40,17 @@ var imageString = file;
 var base64Data = imageString.replace("data:image/jpeg;base64,", "");
 
 // Store Image into Server
-fs.writeFile("uploads/image.png", base64Data, 'base64', function(err) {
+fs.writeFile("uploads/" + rand +".png", base64Data, 'base64', function(err) {
   console.log(err);
 });
+
+const f = "https://jansamarpit.com/uploads/" + rand +".png";
 
 
 // file upload code finish
 
-    const sql3 = "INSERT INTO complaint_master(name,user_id,state,district,priority,admin,date,time) VALUES(?)";
-                        const val = [name,u_id, remarks, city, priority, state, date, dateTime];
+    const sql3 = "INSERT INTO complaint_master(name,user_id,state,district,priority,admin,date,time,file) VALUES(?)";
+                        const val = [name,u_id, remarks, city, priority, state, date, dateTime, f];
                         
                         con.query(sql3, [val], (err, result3) => {                                               
                            

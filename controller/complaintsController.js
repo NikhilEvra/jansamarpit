@@ -34,6 +34,27 @@ exports.add_complaints = catchAsync(async(req, res,next) => {
     console.log(req.body);
 
 
+    if(req.body.file == '' ){
+      console.log('null')
+      const sql3 = "INSERT INTO complaint_master(name,user_id,state,district,priority,admin,date,time) VALUES(?)";
+      const val = [name,u_id, remarks, city, priority, state, date, dateTime];
+      
+      con.query(sql3, [val], (err, result3) => {                                               
+         
+          console.log(result3);
+          console.log(err);
+
+            res.status(200).json({
+              status: 'success',
+              message: 'Complaint raised sucessfully',                
+                              
+          })
+
+      })
+
+    } 
+    else{
+
 // file upload code
 const fs = require("fs");
 var imageString = file;
@@ -64,6 +85,8 @@ const f = "https://jansamarpit.com/uploads/" + rand +".png";
                             })
 
                         })
+    }
+
 
 });
 

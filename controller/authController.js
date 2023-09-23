@@ -31,9 +31,45 @@ exports.signup = catchAsync(async(req, res, next) => {
             const phone = Number(req.body.phone);
             // console.log(req.body);
             const name = req.body.name;
-            const admin = req.body.admin;
+            // const admin = req.body.admin;
             const email = req.body.email;
+            const country = req.body.country;
+            const state = req.body.state;
+            const city = req.body.city;
+            const id = req.body.id;
+            const file = req.body.file;
+            const file2 = req.body.file2;
+            
 
+// file upload code
+const fs = require("fs");
+var imageString = file;
+var base64Data = imageString.replace("data:image/jpeg;base64,", "");
+
+// Store Image into Server
+fs.writeFile("uploads/" + rand +".png", base64Data, 'base64', function(err) {
+  console.log(err);
+});
+
+const f = "https://jansamarpit.com/uploads/" + rand +".png";
+
+
+// file upload code finish
+
+// file upload code
+const fs2 = require("fs");
+var imageString2 = file2;
+var base64Data2 = imageString2.replace("data:image/jpeg;base64,", "");
+
+// Store Image into Server
+fs2.writeFile("uploads/" + rand2 +".png", base64Data2, 'base64', function(err) {
+  console.log(err);
+});
+
+const f2 = "https://jansamarpit.com/uploads/" + rand2 +".png";
+
+
+// file upload code finish
 
             const sql2 = `SELECT COUNT(*) AS count FROM user_master WHERE phone='${phone}'`;  
         
@@ -45,11 +81,12 @@ exports.signup = catchAsync(async(req, res, next) => {
                         return next(new AppError('Mobile Number Already Regestered!', 400));
                     }
 
-                    const sql3 = "INSERT INTO user_master(u_id, name,phone,otp,admin,email,date,time) VALUES(?)";
-                    const val = [uu_id,name, phone, rand, admin, email, date , dateTime];
+                    const sql3 = "INSERT INTO user_master(u_id, name,phone,otp,email,date,time,country,state,city,id_proof,front_id,back_id) VALUES(?)";
+                    const val = [uu_id,name, phone, rand, email, date , dateTime,country,state,city,id,f,f2];
 
                     con.query(sql3, [val], (err, result3) => {
-                  
+                        console.log(result3);
+                        console.log(err);
                         // const req = unirest.post("https://www.fast2sms.com/dev/bulkV2");
                         // req.headers({
                         //     "authorization": "hp6KLBVI8cAvnSu0yMXPk4F17JQUjH9moOC2Dzd3WftqaZsx5lKgEx4zbCIQHPjpnO7AVdsoYRXi2Z15"
@@ -75,11 +112,50 @@ exports.signup = catchAsync(async(req, res, next) => {
                 let u_id = el.id + 1;                            
                 let uu_id = 'JAN/2023/' + u_id;
     
-                const rand = Math.floor(Math.random() * 9000 + 1000);
-                const phone = Number(req.body.phone);
-                const name = req.body.name;
-                const admin = req.body.admin;
-                const email = req.body.email;
+              
+            const rand = Math.floor(Math.random() * 9000 + 1000);
+            const phone = Number(req.body.phone);
+            // console.log(req.body);
+            const name = req.body.name;
+            const admin = req.body.admin;
+            const email = req.body.email;
+            const country = req.body.country;
+            const state = req.body.state;
+            const city = req.body.city;
+            const id = req.body.id;
+            const file = req.body.file;
+            const file2 = req.body.file2;
+            
+
+            const rand1 = Math.floor(Math.random() * 9000000 + 1000000);
+            const rand2 = Math.floor(Math.random() * 9000000 + 1000000);
+
+// file upload code
+const fs = require("fs");
+var imageString = file;
+var base64Data = imageString.replace("data:image/jpeg;base64,", "");
+
+// Store Image into Server
+fs.writeFile("uploads/" + rand1 +".png", base64Data, 'base64', function(err) {
+  console.log(err);
+});
+
+const f = "https://jansamarpit.com/uploads/" + rand1 +".png";
+
+
+// file upload code finish
+
+// file upload code
+const fs2 = require("fs");
+var imageString2 = file2;
+var base64Data2 = imageString2.replace("data:image/jpeg;base64,", "");
+
+// Store Image into Server
+fs2.writeFile("uploads/" + rand2 +".png", base64Data2, 'base64', function(err) {
+  console.log(err);
+});
+
+const f2 = "https://jansamarpit.com/uploads/" + rand2 +".png";
                 
 
 
@@ -98,8 +174,8 @@ exports.signup = catchAsync(async(req, res, next) => {
                             return next(new AppError('Mobile Number Already Regestered!', 400));
                         }
     
-                        const sql3 = "INSERT INTO user_master(u_id, name,phone,otp,admin,email,date,time) VALUES(?)";
-                    const val = [uu_id,name, phone, rand, admin, email, date , dateTime];
+                        const sql3 = "INSERT INTO user_master(u_id, name,phone,otp,email,date,time,country,state,city,id_proof,front_id,back_id) VALUES(?)";
+                        const val = [uu_id,name, phone, rand, email, date , dateTime,country,state,city,id,f,f2];
                         
                         con.query(sql3, [val], (err, result3) => {                                               
                             

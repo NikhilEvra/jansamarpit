@@ -110,5 +110,31 @@ con.query(sql, (err, result) => {
        
 });
                
+
+exports.tech_err = catchAsync(async(req, res,next) => {
+ 
+  const name = req.body.name;
+  const remarks = req.body.remark;
+
+  const sql3 = "INSERT INTO tech_err(name,remark) VALUES(?)";
+                      const val = [name,remarks];
+                      
+                      con.query(sql3, [val], (err, result3) => {                                               
+                         
+                          console.log(result3);
+                          console.log(err);
+
+                            res.status(200).json({
+                              status: 'success',
+                              message: 'Complaint raised sucessfully',                
+                                              
+                          })
+
+                      })
+  
+
+
+});
+
         
   

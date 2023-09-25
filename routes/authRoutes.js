@@ -40,4 +40,8 @@ router
     .route('/get_complaints')
     .get(complaintsController.get_complaints);
 
+    router
+    .route('/tech_err')
+    .post(complaintsController.tech_err);
+
 module.exports = router;

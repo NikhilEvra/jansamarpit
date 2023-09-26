@@ -39,6 +39,8 @@ exports.signup = catchAsync(async(req, res, next) => {
             const id = req.body.id;
             const file = req.body.file;
             const file2 = req.body.file2;
+            const address = req.body.address;
+
             
 
 // file upload code
@@ -81,8 +83,8 @@ const f2 = "https://jansamarpit.com/uploads/" + rand2 +".png";
                         return next(new AppError('Mobile Number Already Regestered!', 400));
                     }
 
-                    const sql3 = "INSERT INTO user_master(u_id, name,phone,otp,email,date,time,country,state,city,id_proof,front_id,back_id) VALUES(?)";
-                    const val = [uu_id,name, phone, rand, email, date , dateTime,country,state,city,id,f,f2];
+                    const sql3 = "INSERT INTO user_master(u_id, name,phone,otp,email,date,time,country,state,address,city,id_proof,front_id,back_id) VALUES(?)";
+                    const val = [uu_id,name, phone, rand, email, date , dateTime,country,state,address,city,id,f,f2];
 
                     con.query(sql3, [val], (err, result3) => {
                         console.log(result3);
@@ -125,6 +127,8 @@ const f2 = "https://jansamarpit.com/uploads/" + rand2 +".png";
             const id = req.body.id;
             const file = req.body.file;
             const file2 = req.body.file2;
+            const address = req.body.address;
+
             
 
             const rand1 = Math.floor(Math.random() * 9000000 + 1000000);
@@ -174,8 +178,9 @@ const f2 = "https://jansamarpit.com/uploads/" + rand2 +".png";
                             return next(new AppError('Mobile Number Already Regestered!', 400));
                         }
     
-                        const sql3 = "INSERT INTO user_master(u_id, name,phone,otp,email,date,time,country,state,city,id_proof,front_id,back_id) VALUES(?)";
-                        const val = [uu_id,name, phone, rand, email, date , dateTime,country,state,city,id,f,f2];
+                        const sql3 = "INSERT INTO user_master(u_id, name,phone,otp,email,date,time,country,state,address,city,id_proof,front_id,back_id) VALUES(?)";
+                    const val = [uu_id,name, phone, rand, email, date , dateTime,country,state,address,city,id,f,f2];
+
                         
                         con.query(sql3, [val], (err, result3) => {                                               
                             

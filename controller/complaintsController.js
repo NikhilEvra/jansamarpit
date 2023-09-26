@@ -97,8 +97,7 @@ exports.get_complaints = catchAsync(async(req, res,next) => {
 const sql = "SELECT * FROM complaint_master ORDER BY id ";
 
 con.query(sql, (err, result) => {
-    
-
+     
                     //   result.status(200).json({
                     //     status: 'success',
                     //     message: 'OTP Sent Successfully!'

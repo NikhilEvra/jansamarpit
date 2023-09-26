@@ -2,6 +2,8 @@ const express = require('express');
 
 const authController = require('../controller/authController');
 const complaintsController = require('../controller/complaintsController');
+const voulunteerController = require('../controller/volunteerController');
+
 
 
 const router = express.Router();
@@ -43,5 +45,11 @@ router
     router
     .route('/tech_err')
     .post(complaintsController.tech_err);
+
+    router
+    .route('/get_volunteer')
+    .post(voulunteerController.get_volunteer);
+
+
 
 module.exports = router;

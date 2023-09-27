@@ -40,6 +40,8 @@ exports.signup = catchAsync(async(req, res, next) => {
             const file = req.body.file;
             const file2 = req.body.file2;
             const address = req.body.address;
+            const address2 = req.body.address2;
+            const pincode = req.body.pincode;
 
             
 
@@ -83,8 +85,8 @@ const f2 = "https://jansamarpit.com/uploads/" + rand2 +".png";
                         return next(new AppError('Mobile Number Already Regestered!', 400));
                     }
 
-                    const sql3 = "INSERT INTO user_master(u_id, name,phone,otp,email,date,time,country,state,address,city,id_proof,front_id,back_id) VALUES(?)";
-                    const val = [uu_id,name, phone, rand, email, date , dateTime,country,state,address,city,id,f,f2];
+                    const sql3 = "INSERT INTO user_master(u_id, name,phone,otp,email,date,time,country,state,address,address2,pincode,city,id_proof,front_id,back_id) VALUES(?)";
+                    const val = [uu_id,name, phone, rand, email, date , dateTime,country,state,address,address2,pincode,city,id,f,f2];
 
                     con.query(sql3, [val], (err, result3) => {
                         console.log(result3);
@@ -128,6 +130,10 @@ const f2 = "https://jansamarpit.com/uploads/" + rand2 +".png";
             const file = req.body.file;
             const file2 = req.body.file2;
             const address = req.body.address;
+            const address2 = req.body.address2;
+            const pincode = req.body.pincode;
+
+
 
             
 
@@ -178,8 +184,8 @@ const f2 = "https://jansamarpit.com/uploads/" + rand2 +".png";
                             return next(new AppError('Mobile Number Already Regestered!', 400));
                         }
     
-                        const sql3 = "INSERT INTO user_master(u_id, name,phone,otp,email,date,time,country,state,address,city,id_proof,front_id,back_id) VALUES(?)";
-                    const val = [uu_id,name, phone, rand, email, date , dateTime,country,state,address,city,id,f,f2];
+                    const sql3 = "INSERT INTO user_master(u_id, name,phone,otp,email,date,time,country,state,address,address2,pincode,city,id_proof,front_id,back_id) VALUES(?)";
+                    const val = [uu_id,name, phone, rand, email, date , dateTime,country,state,address,address2,pincode,city,id,f,f2];
 
                         
                         con.query(sql3, [val], (err, result3) => {                                               

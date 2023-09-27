@@ -40,7 +40,7 @@ router
 
     router
     .route('/get_complaints')
-    .get(complaintsController.get_complaints);
+    .post(complaintsController.get_complaints);
 
     router
     .route('/tech_err')

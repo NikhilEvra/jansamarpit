@@ -32,12 +32,12 @@ exports.add_complaints = catchAsync(async(req, res,next) => {
 
 
     console.log(req.body);
-
+   const c_id = "JAN/2023/" + rand;
 
     if(req.body.file == '' ){
       console.log('null')
-      const sql3 = "INSERT INTO complaint_master(name,user_id,state,district,priority,admin,date,time) VALUES(?)";
-      const val = [name,u_id, remarks, city, priority, state, date, dateTime];
+      const sql3 = "INSERT INTO complaint_master(complaint_id,name,user_id,state,district,priority,admin,date,time) VALUES(?)";
+      const val = [c_id,name,u_id, remarks, city, priority, state, date, dateTime];
       
       con.query(sql3, [val], (err, result3) => {                                               
          
@@ -58,7 +58,7 @@ exports.add_complaints = catchAsync(async(req, res,next) => {
 // file upload code
 const fs = require("fs");
 var imageString = file;
-var base64Data = imageString.replace("data:image/jpeg;base64,", "");
+var base64Data = imageString.replace("data:image/jpeg;base64,", "");z
 
 // Store Image into Server
 fs.writeFile("uploads/" + rand +".png", base64Data, 'base64', function(err) {
@@ -70,8 +70,8 @@ const f = "https://jansamarpit.com/uploads/" + rand +".png";
 
 // file upload code finish
 
-    const sql3 = "INSERT INTO complaint_master(name,user_id,state,district,priority,admin,date,time,file) VALUES(?)";
-                        const val = [name,u_id, remarks, city, priority, state, date, dateTime, f];
+    const sql3 = "INSERT INTO complaint_master(complaint_id,name,user_id,state,district,priority,admin,date,time,file) VALUES(?)";
+                        const val = [c_id,name,u_id, remarks, city, priority, state, date, dateTime, f];
                         
                         con.query(sql3, [val], (err, result3) => {                                               
                            
@@ -92,9 +92,10 @@ const f = "https://jansamarpit.com/uploads/" + rand +".png";
 
 
 exports.get_complaints = catchAsync(async(req, res,next) => {
+  const u_id = req.body.u_id;
 
 // const sql = "SELECT * FROM complaint_master ORDER BY id DESC LIMIT 1";
-const sql = "SELECT * FROM complaint_master ORDER BY id ";
+const sql = `SELECT * FROM complaint_master WHERE user_id='${u_id}' ORDER BY id `;
 
 con.query(sql, (err, result) => {
      
@@ -120,8 +121,8 @@ exports.tech_err = catchAsync(async(req, res,next) => {
                       
                       con.query(sql3, [val], (err, result3) => {                                               
                          
-                          console.log(result3);
-                          console.log(err);
+                          // console.log(result3);
+                          // console.log(err);
 
                             res.status(200).json({
                               status: 'success',

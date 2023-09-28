@@ -26,65 +26,67 @@ exports.add_complaints = catchAsync(async(req, res,next) => {
     const name = req.body.name;     
     const file = req.body.file;
     const u_id = req.body.user_id;
+    const topic = req.body.topic;
+
 
     const rand = Math.floor(Math.random() * 9000000 + 1000000);
 
 
 
-    console.log(req.body);
+    // console.log(req.body);
    const c_id = "JAN/2023/" + rand;
 
     if(req.body.file == '' ){
-      console.log('null')
-      const sql3 = "INSERT INTO complaint_master(complaint_id,name,user_id,state,district,priority,admin,date,time) VALUES(?)";
-      const val = [c_id,name,u_id, remarks, city, priority, state, date, dateTime];
-      
-      con.query(sql3, [val], (err, result3) => {                                               
-         
-          console.log(result3);
-          console.log(err);
+                console.log('null');
+                const sql3 = "INSERT INTO complaint_master(complaint_id,topic,name,user_id,state,district,priority,admin,date,time) VALUES(?)";
+                const val = [c_id,topic,name,u_id, remarks, city, priority, state, date, dateTime];
 
-            res.status(200).json({
-              status: 'success',
-              message: 'Complaint raised sucessfully',                
-                              
-          })
+                con.query(sql3, [val], (err, result3) => {                                               
 
-      })
+                console.log(result3);
+                console.log(err);
+
+                res.status(200).json({
+                status: 'success',
+                message: 'Complaint raised sucessfully',                
+                            
+                })
+
+                })
 
     } 
     else{
 
-// file upload code
-const fs = require("fs");
-var imageString = file;
-var base64Data = imageString.replace("data:image/jpeg;base64,", "");z
+                // file upload code
+                const fs = require("fs");
+                var imageString = file;
+                var base64Data = imageString.replace("data:image/jpeg;base64,", "");
 
-// Store Image into Server
-fs.writeFile("uploads/" + rand +".png", base64Data, 'base64', function(err) {
-  console.log(err);
-});
+                // Store Image into Server
+                fs.writeFile("uploads/" + rand +".png", base64Data, 'base64', function(err) {
+                console.log(err);
+                });
 
-const f = "https://jansamarpit.com/uploads/" + rand +".png";
+                const f = "https://jansamarpit.com/uploads/" + rand +".png";
 
 
-// file upload code finish
+                // file upload code finish
 
-    const sql3 = "INSERT INTO complaint_master(complaint_id,name,user_id,state,district,priority,admin,date,time,file) VALUES(?)";
-                        const val = [c_id,name,u_id, remarks, city, priority, state, date, dateTime, f];
-                        
-                        con.query(sql3, [val], (err, result3) => {                                               
-                           
-                            console.log(result3);
-                            console.log(err);
+                const sql3 = "INSERT INTO complaint_master(complaint_id,topic,name,user_id,state,district,priority,admin,date,time,file) VALUES(?)";
+                const val = [c_id,topic,name,u_id, remarks, city, priority, state, date, dateTime, f];
 
-                              res.status(200).json({
-                                status: 'success',
-                                message: 'Complaint raised sucessfully',                
-                                                
-                            })
+                con.query(sql3, [val], (err, result3) => {                                               
 
-                        })
+                console.log(result3);
+                console.log(err);
+
+                res.status(200).json({
+                status: 'success',
+                message: 'Complaint raised sucessfully',                
+
+                })
+
+                })
     }
 
 
@@ -136,5 +138,24 @@ exports.tech_err = catchAsync(async(req, res,next) => {
 
 });
 
+
+exports.get_complaint_by_id =  catchAsync(async(req, res,next) => {
+  const c_id = req.body.c_id;
+
+// const sql = "SELECT * FROM complaint_master ORDER BY id DESC LIMIT 1";
+const sql = `SELECT * FROM complaint_master WHERE complaint_id='${c_id}' ORDER BY id `;
+
+con.query(sql, (err, result) => {
+     
+                    //   result.status(200).json({
+                    //     status: 'success',
+                    //     message: 'data sent sucessfully!'
+                    // })
+
+                    res.send(result);
+                
+            }) 
+       
+});
         
   

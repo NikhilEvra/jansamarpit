@@ -264,7 +264,7 @@ exports.otpVerification = catchAsync(async(req, res,next) => {
     con.query($sql, (err, result) => {
         
      if(result.length == 0) return next(new AppError('Invalid Otp! Please Try Again!'));
-
+ 
         res.status(200).json({
             status : 'success',
             message : 'Otp validated successfully',

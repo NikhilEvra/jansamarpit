@@ -50,6 +50,7 @@ router
     .route('/get_volunteer')
     .post(voulunteerController.get_volunteer);
 
-
+    router.route('/get_complaint_by_id')
+    .post(complaintsController.get_complaint_by_id)
 
 module.exports = router;

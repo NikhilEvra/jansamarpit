@@ -3,6 +3,8 @@ const express = require('express');
 const authController = require('../controller/authController');
 const complaintsController = require('../controller/complaintsController');
 const voulunteerController = require('../controller/volunteerController');
+const pollsController = require('../controller/pollsController');
+
 
 
 
@@ -52,5 +54,17 @@ router
 
     router.route('/get_complaint_by_id')
     .post(complaintsController.get_complaint_by_id)
+
+    router.route('/post_volunteer_by_id')
+    .post(voulunteerController.post_volunteer_by_id)
+     
+    router.route('/get_volunteer_by_id')
+    .post(voulunteerController.get_volunteer_by_id)
+
+    router.route('/get_question')
+    .get(pollsController.get_question)
+
+
+
 
 module.exports = router;

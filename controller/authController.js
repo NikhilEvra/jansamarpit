@@ -276,7 +276,7 @@ exports.otpVerification = catchAsync(async(req, res,next) => {
 
 // exports.add_complaints = catchAsync(async(req, res,next) => {
 //     var date_ob = new Date();
-//     var day = ("0" + date_ob.getDate()).slice(-2);
+//     var day = ("0" + date_ob.getDate()).slice(-2); 
 //     var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
 //     var year = date_ob.getFullYear();
        

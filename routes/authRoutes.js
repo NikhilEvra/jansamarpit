@@ -64,7 +64,16 @@ router
     router.route('/get_question')
     .get(pollsController.get_question)
 
+    router.route('/get_question_vs')
+    .get(pollsController.get_question_vs)
 
+    router.route('/get_question_yes_no')
+    .get(pollsController.get_question_yes_no);
 
+    router.route('/get_dash_data')
+    .post(authController.get_dash_data)
+
+    router.route('/get_dash_data2')
+    .post(authController.get_dash_data2)
 
 module.exports = router;

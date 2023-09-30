@@ -274,6 +274,51 @@ exports.otpVerification = catchAsync(async(req, res,next) => {
 
 });
 
+
+
+exports.get_dash_data = catchAsync(async(req, res, next) => {
+   
+    const u_id = req.body.u_id;
+
+    const sql =  `SELECT COUNT(*) AS count FROM complaint_master WHERE user_id='${u_id}'`;  
+    con.query(sql, (err, result) => {
+
+        // if(result.length == 0) return next(new AppError('Internal server Error!', 400));
+       
+        res.status(200).json({
+            status: 'success',
+            message: result
+       
+    })
+        
+    })
+
+
+});
+
+
+
+exports.get_dash_data2 = catchAsync(async(req, res, next) => {
+   
+    const u_id = req.body.u_id;
+
+    const sql2 =  `SELECT COUNT(*) AS count FROM tech_err WHERE user_id='${u_id}'`;  
+    con.query(sql2, (err, result2) => {
+
+        // if(result.length == 0) return next(new AppError('Internal server Error!', 400));
+       
+        res.status(200).json({
+            status: 'success',
+            message: result2
+       
+    })
+        
+    })
+
+});
+
+
+
 // exports.add_complaints = catchAsync(async(req, res,next) => {
 //     var date_ob = new Date();
 //     var day = ("0" + date_ob.getDate()).slice(-2); 

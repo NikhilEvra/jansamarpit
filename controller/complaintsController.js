@@ -117,9 +117,10 @@ exports.tech_err = catchAsync(async(req, res,next) => {
  
   const name = req.body.name;
   const remarks = req.body.remark;
+  const u_id = req.body.u_id;
 
-  const sql3 = "INSERT INTO tech_err(name,remark) VALUES(?)";
-                      const val = [name,remarks];
+  const sql3 = "INSERT INTO tech_err(name,remark,user_id) VALUES(?)";
+                      const val = [name,remarks,u_id];
                       
                       con.query(sql3, [val], (err, result3) => {                                               
                          

@@ -6,10 +6,7 @@ const voulunteerController = require('../controller/volunteerController');
 const pollsController = require('../controller/pollsController');
 
 
-
-
 const router = express.Router();
-
 
 router
     .route('/signup')
@@ -75,5 +72,8 @@ router
 
     router.route('/get_dash_data2')
     .post(authController.get_dash_data2)
+
+    router.route('/get_volunteer_by_v_id')
+    .post(voulunteerController.get_volunteer_by_v_id)
 
 module.exports = router;

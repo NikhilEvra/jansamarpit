@@ -43,7 +43,7 @@ exports.post_volunteer_by_id = catchAsync(async(req, res,next) => {
   
                    
     
-exports. get_volunteer_by_id = catchAsync(async(req, res,next) => {
+exports.get_volunteer_by_id = catchAsync(async(req, res,next) => {
 
     const u_id = req.body.u_id;
 
@@ -54,10 +54,24 @@ exports. get_volunteer_by_id = catchAsync(async(req, res,next) => {
          
                         res.send(result);
                     
-                }) 
+                }); 
            
     });
 
+        
+  exports.get_volunteer_by_v_id = catchAsync(async(req, res,next) => {
+
+    const v_id = req.body.v_id;
+
+    const sql = `SELECT * FROM volunteer WHERE name = '${v_id}' `;
     
+    con.query(sql, (err, result) => {
+                    
+                        res.send(result);
+                    
+                }); 
+
+    });
+
            
   

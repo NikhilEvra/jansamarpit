@@ -289,13 +289,10 @@ exports.get_dash_data = catchAsync(async(req, res, next) => {
             status: 'success',
             message: result
        
-    })
+        })
         
     })
-
-
-});
-
+}); 
 
 
 exports.get_dash_data2 = catchAsync(async(req, res, next) => {

@@ -219,36 +219,47 @@ const f2 = "https://jansamarpit.com/uploads/" + rand2 +".png";
 
 exports.login = catchAsync(async(req, res, next) => {
    
-    const phone = req.body.phone;
-    console.log(phone)
+    var date_ob = new Date();
+    var day = ("0" + date_ob.getDate()).slice(-2);
+    var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+    var year = date_ob.getFullYear();
+       
+    var date = year + "-" + month + "-" + day;
+    // console.log(date);
+        
+    var hours = date_ob.getHours();
+    var minutes = date_ob.getMinutes();
+    var seconds = date_ob.getSeconds();
+  
+    var dateTime =  hours + ":" + minutes + ":" ;
 
-    const sql = `SELECT * FROM user_master WHERE phone='${phone}' AND status='Active'`;
+    const phone = req.body.phone;
+    // console.log(phone);
+
+    const sql = `SELECT * FROM user_master WHERE phone = '${phone}' AND status='Active' `;
     con.query(sql, (err, result) => {
 
         if(result.length == 0) return next(new AppError('Invalid Phone Number!', 400));
 
         const rand = Math.floor(Math.random() * 9000 + 1000);
 
-        const sql2 = `UPDATE user_master SET otp=? WHERE phone='${phone}'`;
-        con.query(sql2, rand, (err, result2) => {
-
-
-            // const req = unirest("POST", "https://www.fast2sms.com/dev/bulkV2");
-            // req.headers({
-            //     "authorization": "hp6KLBVI8cAvnSu0yMXPk4F17JQUjH9moOC2Dzd3WftqaZsx5lKgEx4zbCIQHPjpnO7AVdsoYRXi2Z15"
-            // });
-            // req.form({
-            //     "variables_values": `${rand}`,
-            //     "route": "otp",
-            //     "numbers": `${phone}`,
-            //   });
-
-            //   req.end(res => {});
-              res.status(200).json({
-                status: 'success',
-                message: 'OTP Sent Successfully!'
-            })
-        })
+        
+        const sql2 = `UPDATE user_master SET otp=?, last_log_date=?, last_log_time=? WHERE phone='${phone}'`;
+        con.query(sql2, [rand, date, dateTime], (err, result2) => {
+          if (err) {
+            console.error(err);
+            res.status(500).json({
+              status: 'error',
+              message: 'Failed to update OTP and log_time in the database.',
+            });
+          } else {
+            res.status(200).json({
+              status: 'success',
+              message: 'OTP Sent Successfully!',
+            });
+          }
+      
+        });
         
     })
 

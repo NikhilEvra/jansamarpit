@@ -38,13 +38,13 @@ exports.add_complaints = catchAsync(async(req, res,next) => {
 
     if(req.body.file == '' ){
                 console.log('null');
-                const sql3 = "INSERT INTO complaint_master(complaint_id,topic,name,user_id,state,district,priority,admin,date,time) VALUES(?)";
-                const val = [c_id,topic,name,u_id, remarks, city, priority, state, date, dateTime];
+                const sql3 = "INSERT INTO complaint_master(complaint_id,topic,name,user_id,state,district,priority,remarks,date,time,file) VALUES(?)";
+                const val = [c_id,topic,name,u_id, state, city, priority, remarks, date, dateTime, f];
 
                 con.query(sql3, [val], (err, result3) => {                                               
 
-                console.log(result3);
-                console.log(err);
+                // console.log(result3);
+                // console.log(err);
 
                 res.status(200).json({
                 status: 'success',
@@ -72,13 +72,13 @@ exports.add_complaints = catchAsync(async(req, res,next) => {
 
                 // file upload code finish
 
-                const sql3 = "INSERT INTO complaint_master(complaint_id,topic,name,user_id,state,district,priority,admin,date,time,file) VALUES(?)";
-                const val = [c_id,topic,name,u_id, remarks, city, priority, state, date, dateTime, f];
+                const sql3 = "INSERT INTO complaint_master(complaint_id,topic,name,user_id,state,district,priority,remarks,date,time,file) VALUES(?)";
+                const val = [c_id,topic,name,u_id, state, city, priority, remarks, date, dateTime, f];
 
                 con.query(sql3, [val], (err, result3) => {                                               
 
-                console.log(result3);
-                console.log(err);
+                // console.log(result3);
+                // console.log(err);
 
                 res.status(200).json({
                 status: 'success',
@@ -97,16 +97,23 @@ exports.get_complaints = catchAsync(async(req, res,next) => {
   const u_id = req.body.u_id;
 
 // const sql = "SELECT * FROM complaint_master ORDER BY id DESC LIMIT 1";
-const sql = `SELECT * FROM complaint_master WHERE user_id='${u_id}' ORDER BY id `;
+const sql = `SELECT * FROM complaint_master WHERE user_id='${u_id}' ORDER BY id DESC `;
 
 con.query(sql, (err, result) => {
-     
-                    //   result.status(200).json({
-                    //     status: 'success',
-                    //     message: 'OTP Sent Successfully!'
-                    // })
+  if (err) {
+    console.error(err);
+    res.status(500).json({
+      status: 'error',
+      message: 'Internal server Error',
+    });
+  } else {
+    res.status(200).json({
+      status: 'success',
+      message:result,
+    });
+  }
 
-                    res.send(result);
+                    // res.send(result);
                 
             }) 
        

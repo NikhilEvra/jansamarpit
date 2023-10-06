@@ -76,4 +76,10 @@ router
     router.route('/get_volunteer_by_v_id')
     .post(voulunteerController.get_volunteer_by_v_id)
 
+    router.route('/post_poll_answer')
+    .post(pollsController.post_poll_answer)
+
+    // router.route('/get_answer_by_u_id')
+    // .post(pollsController.get_answer_by_u_id)
+
 module.exports = router;

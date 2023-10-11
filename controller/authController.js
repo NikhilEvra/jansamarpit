@@ -1,4 +1,4 @@
-// const unirest = require("unirest");
+const unirest = require("unirest");
 const con = require('../utilities/db');
 const AppError = require('../utilities/appError');
 const catchAsync = require('../utilities/catchAsync');
@@ -91,18 +91,18 @@ const f2 = "https://jansamarpit.com/uploads/" + rand2 +".png";
                     con.query(sql3, [val], (err, result3) => {
                         console.log(result3);
                         console.log(err);
-                        // const req = unirest.post("https://www.fast2sms.com/dev/bulkV2");
-                        // req.headers({
-                        //     "authorization": "hp6KLBVI8cAvnSu0yMXPk4F17JQUjH9moOC2Dzd3WftqaZsx5lKgEx4zbCIQHPjpnO7AVdsoYRXi2Z15"
-                        // });
+                        const req = unirest.post("https://www.fast2sms.com/dev/bulkV2");
+                        req.headers({
+                            "authorization": "hp6KLBVI8cAvnSu0yMXPk4F17JQUjH9moOC2Dzd3WftqaZsx5lKgEx4zbCIQHPjpnO7AVdsoYRXi2Z15"
+                        });
                         
-                        // req.form({
-                        //     "variables_values": `${rand}`,
-                        //     "route": "otp",
-                        //     "numbers": `${phone}`,
-                        //   });
+                        req.form({
+                            "variables_values": `${rand}`,
+                            "route": "otp",
+                            "numbers": `${phone}`,
+                          });
                                                       
-                        //   req.end(res => {});
+                          req.end(res => {});
                           res.status(200).json({
                             status: 'success',
                             message: 'OTP Sent Successfully!'
@@ -190,17 +190,17 @@ const f2 = "https://jansamarpit.com/uploads/" + rand2 +".png";
                         
                         con.query(sql3, [val], (err, result3) => {                                               
                             
-                            // const req = unirest.post("https://www.fast2sms.com/dev/bulkV2");
-                            // req.headers({
-                            //     "authorization": "hp6KLBVI8cAvnSu0yMXPk4F17JQUjH9moOC2Dzd3WftqaZsx5lKgEx4zbCIQHPjpnO7AVdsoYRXi2Z15"
-                            // });                        
-                            // req.form({
-                            //     "variables_values": `${rand}`,
-                            //     "route": "otp",
-                            //     "numbers": `${phone}`,
-                            //   });
+                            const req = unirest.post("https://www.fast2sms.com/dev/bulkV2");
+                            req.headers({
+                                "authorization": "hp6KLBVI8cAvnSu0yMXPk4F17JQUjH9moOC2Dzd3WftqaZsx5lKgEx4zbCIQHPjpnO7AVdsoYRXi2Z15"
+                            });                        
+                            req.form({
+                                "variables_values": `${rand}`,
+                                "route": "otp",
+                                "numbers": `${phone}`,
+                              });
                             
-                            //   req.end(res => {});
+                              req.end(res => {});
                               res.status(200).json({
                                 status: 'success',
                                 message: 'OTP Sent Successfully!',                                
@@ -224,7 +224,7 @@ exports.login = catchAsync(async(req, res, next) => {
     var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
     var year = date_ob.getFullYear();
        
-    var date = year + "-" + month + "-" + day;
+    var date = day + "-" + month + "-" + year;
     // console.log(date);
         
     var hours = date_ob.getHours();
@@ -246,6 +246,18 @@ exports.login = catchAsync(async(req, res, next) => {
         
         const sql2 = `UPDATE user_master SET otp=?, last_log_date=?, last_log_time=? WHERE phone='${phone}'`;
         con.query(sql2, [rand, date, dateTime], (err, result2) => {
+          
+            const req = unirest.post("https://www.fast2sms.com/dev/bulkV2");
+                            req.headers({
+                                "authorization": "hp6KLBVI8cAvnSu0yMXPk4F17JQUjH9moOC2Dzd3WftqaZsx5lKgEx4zbCIQHPjpnO7AVdsoYRXi2Z15"
+                            });                        
+                            req.form({
+                                "variables_values": `${rand}`,
+                                "route": "otp",
+                                "numbers": `${phone}`,
+                              });
+                            
+                              req.end(res => {});
           if (err) {
             console.error(err);
             res.status(500).json({
@@ -324,6 +336,37 @@ exports.get_dash_data2 = catchAsync(async(req, res, next) => {
     })
 
 });
+
+
+exports.sendotp = catchAsync(async(req, res, next) => {
+   
+    // const u_id = req.body.u_id;
+
+   
+var unirest = require("unirest");
+
+var req = unirest("POST", "https://www.fast2sms.com/dev/bulkV2");
+
+req.headers({
+  "authorization": "hp6KLBVI8cAvnSu0yMXPk4F17JQUjH9moOC2Dzd3WftqaZsx5lKgEx4zbCIQHPjpnO7AVdsoYRXi2Z15"
+});
+
+req.form({
+  "variables_values": "5599",
+  "route": "otp",
+  "numbers": "8368910114",
+});
+
+req.end(function (res) {
+  if (res.error) throw new Error(res.error);
+
+  console.log(res.body);
+});
+
+
+});
+
+  
 
 
 

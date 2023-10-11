@@ -16,6 +16,10 @@ router
     .route('/login')
     .post(authController.login);
 
+    router
+          .route('/sendotp')
+          .post(authController.sendotp)
+
 router
     .route('/otp-verification')
     .post(authController.otpVerification);
@@ -82,4 +86,19 @@ router
     // router.route('/get_answer_by_u_id')
     // .post(pollsController.get_answer_by_u_id)
 
-module.exports = router;
+    router.route('/get_question2')
+    .post(pollsController.get_question2)
+
+    router.route('/get_polls_answer')
+    .post(pollsController.get_polls_answer)
+
+    router.route('/get_polls_answer_vs')
+    .post(pollsController.get_polls_answer_vs);
+
+    router.route('/get_polls_answer_yesno')
+    .post(pollsController.get_polls_answer_yesno);
+
+    router.route('/get_graph_data')
+    .get(pollsController.get_graph_data)
+
+   module.exports = router;

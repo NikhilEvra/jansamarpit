@@ -17,10 +17,27 @@ exports. get_question = catchAsync(async(req, res,next) => {
            
     });
 
+    exports. get_question2 = catchAsync(async(req, res,next) => {
+    const u_id = req.body.u_id;
+  
+ 
+
+        const sql = ` SELECT * FROM poll_question WHERE type='MCQ' AND status = 'Active' ORDER BY id
+        LEFT JOIN poll_user_answer ON table_nameA.column_name = table_nameB.column_name
+         `;
+        
+        con.query(sql, (err, result) => {
+             
+                            res.send(result);
+                        
+                    });
+               
+        });
+    
         
 exports. get_question_vs = catchAsync(async(req, res,next) => {
 
-
+    
 
     const sql = `SELECT * FROM poll_question WHERE type='v/s' AND status = 'Active' ORDER BY id `;
     
@@ -121,7 +138,74 @@ message: 'Answerd Submitted!',
 //     });      
     
 
+  exports.get_polls_answer = catchAsync(async(req, res,next) => {
 
+       const u_id = req.body.u_id;
+    // const ans = req.body.answer;
+    // const que = req.body.question; 
     
+     const sql = `SELECT * FROM poll_question LEFT JOIN poll_user_answer ON poll_user_answer.question = poll_question.question where poll_user_answer.u_id = '${u_id}' AND poll_question.type='MCQ' ` ;  
+
+    // const sql = `SELECT poll_question.question, poll_question.type FROM poll_question UNION SELECT poll_user_answer.answer, poll_user_answer.question FROM poll_user_answer`;
+        
+    con.query(sql, (err, result) => {
+          
+           res.send(result);
+                    
+                });
+   
+    });   
+    
+    exports.get_polls_answer_vs = catchAsync(async(req, res,next) => {
+
+        const u_id = req.body.u_id;
+     // const ans = req.body.answer;
+     // const que = req.body.question; 
+     
+      const sql = `SELECT * FROM poll_question LEFT JOIN poll_user_answer ON poll_user_answer.question = poll_question.question where poll_user_answer.u_id = '${u_id}' AND poll_question.type='v/s' ` ;  
+ 
+     // const sql = `SELECT poll_question.question, poll_question.type FROM poll_question UNION SELECT poll_user_answer.answer, poll_user_answer.question FROM poll_user_answer`;
+         
+     con.query(sql, (err, result) => {
            
-  
+            res.send(result);
+                     
+                 });
+    
+     });   
+
+
+     exports.get_polls_answer_yesno = catchAsync(async(req, res,next) => {
+
+        const u_id = req.body.u_id;
+     // const ans = req.body.answer;
+     // const que = req.body.question; 
+     
+      const sql = `SELECT * FROM poll_question LEFT JOIN poll_user_answer ON poll_user_answer.question = poll_question.question where poll_user_answer.u_id = '${u_id}' AND poll_question.type='yes no' ` ;  
+ 
+     // const sql = `SELECT poll_question.question, poll_question.type FROM poll_question UNION SELECT poll_user_answer.answer, poll_user_answer.question FROM poll_user_answer`;
+         
+     con.query(sql, (err, result) => {
+           
+            res.send(result);
+                     
+                 });
+    
+     });    
+    
+
+     exports.get_graph_data = catchAsync(async(req, res,next) => {
+
+        
+     
+      const sql = `SELECT * FROM graph where id = 1 ` ;  
+ 
+         
+     con.query(sql, (err, result) => {
+           
+            res.send(result);
+                     
+                 });
+    
+     });    
+    

@@ -198,7 +198,7 @@ message: 'Answerd Submitted!',
 
         
      
-      const sql = `SELECT * FROM graph where id = 1 ` ;  
+      const sql = `SELECT * FROM graph  ` ;  
  
          
      con.query(sql, (err, result) => {
@@ -209,3 +209,22 @@ message: 'Answerd Submitted!',
     
      });    
     
+
+     exports.get_polls_answer_by_question = catchAsync(async(req, res,next) => {
+
+        const u_id = req.body.u_id;
+        const ans = req.body.answer;
+        const que = req.body.question; 
+     
+      const sql = `SELECT * FROM poll_question LEFT JOIN poll_user_answer ON poll_user_answer.question = poll_question.question where poll_user_answer.u_id = '${u_id}' AND poll_question.question='${que}' ` ;  
+ 
+     // const sql = `SELECT poll_question.question, poll_question.type FROM poll_question UNION SELECT poll_user_answer.answer, poll_user_answer.question FROM poll_user_answer`;
+         
+     con.query(sql, (err, result) => {
+           
+            res.send(result);
+                     
+                 });
+    
+     });   
+     

@@ -210,6 +210,28 @@ message: 'Answerd Submitted!',
      });    
     
 
+   
+     
+
+exports.get_polls_count = catchAsync(async(req, res, next) => {
+   
+    
+
+    const sql =  `SELECT COUNT(*) AS count FROM poll_question WHERE status = 'Active' `;  
+    con.query(sql, (err, result) => {
+
+        // if(result.length == 0) return next(new AppError('Internal server Error!', 400));
+       
+        res.status(200).json({
+            status: 'success',
+            message: result
+       
+        })
+        
+    })
+}); 
+
+
      exports.get_polls_answer_by_question = catchAsync(async(req, res,next) => {
 
         const u_id = req.body.u_id;

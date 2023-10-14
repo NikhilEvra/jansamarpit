@@ -102,6 +102,9 @@ router
     .get(pollsController.get_graph_data);
 
     router.route('/get_polls_answer_by_question')
-    .post(pollsController.get_polls_answer_by_question)
+    .post(pollsController.get_polls_answer_by_question);
+
+    router.route('/get_polls_count')
+    .get((pollsController.get_polls_count))
 
    module.exports = router;

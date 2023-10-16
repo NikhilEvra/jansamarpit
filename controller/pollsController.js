@@ -195,10 +195,11 @@ message: 'Answerd Submitted!',
     
 
      exports.get_graph_data = catchAsync(async(req, res,next) => {
-
+     
+        const q_id = req.body.q_id;
         
      
-      const sql = `SELECT * FROM graph  ` ;  
+      const sql = `SELECT * FROM graph where q_id='${q_id}' ` ;  
  
          
      con.query(sql, (err, result) => {

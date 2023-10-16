@@ -231,7 +231,7 @@ exports.login = catchAsync(async(req, res, next) => {
     var minutes = date_ob.getMinutes();
     var seconds = date_ob.getSeconds();
   
-    var dateTime =  hours + ":" + minutes + ":" ;
+    var dateTime =  hours + ":" + minutes  ;
 
     const phone = req.body.phone;
     // console.log(phone);
